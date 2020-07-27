@@ -45,17 +45,16 @@ public class HWTest {
         $(NAMEPROGECTSELECTOR).shouldHave(value(nameProject));
     }
 
-    @Test(dependsOnMethods = "checkingTheProject")
-    public void deleteProject() {
-        open("/index.php?/admin/projects/overview");
-
-        $(".page_title").shouldHave(text(namePageProject));
-
-        $(DELETEBUTTON).click();
-//        $(DELETECHECKBOXSELECTOR).click();
-//        $(OKBUTTON).click();
-
-        $$(PROJECTSELECTOR).shouldHaveSize(2).find(text(nameProject));
-
-    }
+//    @Test(dependsOnMethods = "checkingTheProject")
+//    public void deleteProject() {
+//        open("/index.php?/admin/projects/overview");
+//
+//        $(".page_title").shouldHave(text(namePageProject));
+//
+//        $(DELETEBUTTON).click();
+////        $(DELETECHECKBOXSELECTOR).click();
+////        $(OKBUTTON).click();
+//
+//        $$(PROJECTSELECTOR).shouldHaveSize(2).find(text(nameProject));
+//    }
 }
