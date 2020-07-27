@@ -8,32 +8,33 @@ import static com.codeborne.selenide.Condition.*;
 public class HWTest {
     String email = "atrostyanko+master@gmail.com";
     String password = "QqtRK9elseEfAk6ilYcJ";
-    String namePageProject = "All Projects";
-    String nameProject  = "PR02";
-    String namePageAddProject = "Add Project";
-
-
+    String namePageAllProject = "All Projects";
+    String nameProject = "PR02";
+    String namePageProject = "Projects";
 
     private By EMAILSELECTOR = By.id("name");
     private By PASSWORDSELECTOR = By.name("password");
     private By LOGINBUTTONSELECTOR = By.id("button_primary");
     private By NAMEPROGECTSELECTOR = By.id("name");
     private By PROJECTSELECTOR = By.className("hoverSensitive");
-    private By ADDPROJECTBUTTON = By.cssSelector(".button-add");
+    private By DELETEBUTTON = By.className("icon-small-delete");
+    private By DELETECHECKBOXSELECTOR = By.name("deleteCheckbox");
+    private By OKBUTTON = By.xpath("//*[@id='deleteDialog']/div[3]");
+
 
     @Test
     public void login() {
         Configuration.baseUrl = "https://aqa5master.testrail.io";
         Configuration.startMaximized = true;
-       // Configuration.headless = true;
-       // Configuration.fastSetValue = true;
+        Configuration.headless = true;
+        Configuration.fastSetValue = true;
         open("/");
 
         $(EMAILSELECTOR).setValue(email);
         $(PASSWORDSELECTOR).setValue(password);
         $(LOGINBUTTONSELECTOR).submit();
 
-        $(".page_title").shouldHave(text(namePageProject));
+        $(".page_title").shouldHave(text(namePageAllProject));
     }
 
     @Test(dependsOnMethods = "login")
@@ -45,10 +46,16 @@ public class HWTest {
     }
 
     @Test(dependsOnMethods = "checkingTheProject")
-    public void addProject() {
+    public void deleteProject() {
         open("/index.php?/admin/projects/overview");
 
-        $(ADDPROJECTBUTTON).click();
-        $(".page_title").shouldHave(text(namePageAddProject));
+        $(".page_title").shouldHave(text(namePageProject));
+
+        $(DELETEBUTTON).click();
+//        $(DELETECHECKBOXSELECTOR).click();
+//        $(OKBUTTON).click();
+
+        $$(PROJECTSELECTOR).shouldHaveSize(2).find(text(nameProject));
+
     }
 }
